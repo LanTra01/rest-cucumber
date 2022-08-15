@@ -1,11 +1,12 @@
 package com.kms.api.requests;
 
-import static io.restassured.RestAssured.given;
-
 import com.kms.api.tests.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+
 import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 
 /**
  * Generic RestClient containing some Rest-Assured methods.
@@ -70,7 +71,20 @@ public class RestClient extends TestBase {
    */
   public static Response doPutRequestWithPayload(
       String requestPath, ContentType contentType, Object body) {
-    return null;
+    return given()
+            .log()
+            .everything()
+            .contentType(contentType)
+            .with()
+            .accept(contentType)
+            .body(body)
+            .when()
+            .put(requestPath)
+            .then()
+            .log()
+            .all()
+            .extract()
+            .response();
   }
 
   /**
@@ -80,6 +94,15 @@ public class RestClient extends TestBase {
    * @return the response of the Delete request
    */
   public static Response doDeleteRequestWithParams(String requestPath) {
-    return null;
+    return given()
+            .log()
+            .everything()
+            .when()
+            .delete(requestPath)
+            .then()
+            .log()
+            .all()
+            .extract()
+            .response();
   }
 }

@@ -1,4 +1,4 @@
-@product
+@product @AddProduct
 Feature: Add new product
 
   Scenario: Add new a product
@@ -7,3 +7,9 @@ Feature: Add new product
     When I perform the request to add new product
     Then the status code "200" should return
     And the product is added successfully with an integer Id
+
+  Scenario: Add new product with invalid json body
+    Given the path "add" to the endpoint
+    But I supply invalid json payload
+    When I perform the request to add the invalid product
+    Then the status code "400" should return
